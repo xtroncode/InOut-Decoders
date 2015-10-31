@@ -1,0 +1,1 @@
+console.error("SyntaxError: /home/akash/react_intro/react_demo/demos/todo/js/disease_stats.js: Unexpected token (72:31) while parsing file: /home/akash/react_intro/react_demo/demos/todo/js/disease_stats.js");
