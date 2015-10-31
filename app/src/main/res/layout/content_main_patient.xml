@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/name"
         android:layout_alignParentTop="true"
-        android:text="Meet"/>
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -73,7 +73,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         android:padding="12dp"
-        android:layout_below="@id/height"
+        android:layout_below="@id/btn_change_details"
         android:text="Patient History"/>
 
 </RelativeLayout>

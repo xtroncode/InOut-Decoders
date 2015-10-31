@@ -3,12 +3,17 @@ package co.hackinout.www.inout_decoders;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.DialogFragment;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -55,6 +60,7 @@ public class PatientActivity extends AppCompatActivity {
             weight = (EditText) findViewById(R.id.weight);
             height = (EditText) findViewById(R.id.height);
             AppCompatButton mChangeDetails = (AppCompatButton) findViewById(R.id.btn_change_details);
+            AppCompatButton mPatientHistroy = (AppCompatButton) findViewById(R.id.view_patient_history);
             Intent intent = getIntent();
            // Log.d("Intent string",intent.getDataString());
 
@@ -68,7 +74,24 @@ public class PatientActivity extends AppCompatActivity {
                     patientObject.saveInBackground();
                 }
             });
+            mPatientHistroy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(PatientActivity.this,NewPatientActivity.class);
+                    intent.setData(Uri.parse(patientObject.getString("UID")));
+                    startActivity(intent);
 
+                }
+            });
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_case);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                }
+            });
 
         }
 
@@ -86,6 +109,10 @@ public class PatientActivity extends AppCompatActivity {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Patients");
             try {
                 query.whereEqualTo("UID", patientJson.getString("uid"));
+                query.include("History");
+                query.include("Restrictions");
+                query.include("General");
+
                 query.getFirstInBackground(new GetCallback<ParseObject>() {
                     public void done(ParseObject object, ParseException e) {
                         if (object == null) {
@@ -97,9 +124,9 @@ public class PatientActivity extends AppCompatActivity {
                                 patientObject.put("gender", patientJson.getString("gender"));
                                 patientObject.put("yob", patientJson.getString("yob"));
 
-                                patientObject.put("loc", patientJson.getString("loc"));
+
                                 patientObject.put("vtc", patientJson.getString("vtc"));
-                                patientObject.put("po", patientJson.getString("po"));
+
                                 patientObject.put("dist", patientJson.getString("dist"));
                                 patientObject.put("state", patientJson.getString("state"));
                                 patientObject.put("pc", patientJson.getString("pc"));
@@ -118,6 +145,16 @@ public class PatientActivity extends AppCompatActivity {
                                 }catch (JSONException error){
                                     patientObject.put("lm", "");
                                 }
+                                try {
+                                    patientObject.put("loc", patientJson.getString("loc"));
+                                }catch (JSONException error){
+                                    patientObject.put("loc", "");
+                                }
+                                try {
+                                    patientObject.put("po", patientJson.getString("po"));
+                                }catch (JSONException error){
+                                    patientObject.put("po", "");
+                                }
                                 patientObject.pinInBackground();
                                 Intent intent = new Intent(PatientActivity.this,NewPatientActivity.class);
                                 intent.setData(Uri.parse(patientObject.getString("UID")));
@@ -134,7 +171,7 @@ public class PatientActivity extends AppCompatActivity {
                         } else {
                             Log.d("UID-200", "Retrieved the object.");
                             patientObject = object;
-
+                            patientObject.pinInBackground();
                         }
 
                         ShowScannedData(patientObject);
@@ -150,7 +187,7 @@ public class PatientActivity extends AppCompatActivity {
 
     private void ShowScannedData(ParseObject object){
 
-            name.setText(patientObject.getString("name"));
+            name.setText(patientObject.getString("Name"));
             gender.setText(patientObject.getString("gender"));
             yob.setText(patientObject.getString("yob"));
             pc.setText(patientObject.getString("pc"));

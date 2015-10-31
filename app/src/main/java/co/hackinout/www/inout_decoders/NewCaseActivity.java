@@ -23,7 +23,7 @@ import org.json.XML;
 /**
  * Created by meet on 31/10/15.
  */
-public class NewPatientActivity extends AppCompatActivity {
+public class NewCaseActivity extends AppCompatActivity {
     protected JSONObject patientJson = null;
     private ParseObject patientObject;
     private ParseObject patientHistory;
@@ -72,7 +72,7 @@ public class NewPatientActivity extends AppCompatActivity {
                 patientObject.put("Restrictions",patientRestrictions);
                 patientObject.put("General",patientGeneral);
                 patientObject.saveInBackground();
-                            }
+            }
         });
 
     }
@@ -120,58 +120,58 @@ public class NewPatientActivity extends AppCompatActivity {
 
             case R.id.blood_pressure:
 
-                    patientHistory.put("High_Blood_Pressure",checked);
+                patientHistory.put("High_Blood_Pressure",checked);
 
                 // I'm lactose intolerant
                 break;
             case R.id.asthma:
 
-                    patientHistory.put("Asthma",checked);
+                patientHistory.put("Asthma",checked);
 
                 break;
             case R.id.cardiac:
 
-                    patientHistory.put("Cardiac",checked);
+                patientHistory.put("Cardiac",checked);
 
                 break;
             case R.id.lung_disease:
 
-                    patientHistory.put("Lung_Disease",checked);
+                patientHistory.put("Lung_Disease",checked);
 
                 break;
             case R.id.diabetes:
 
-                    patientRestrictions.put("Diabetes",checked);
+                patientRestrictions.put("Diabetes",checked);
 
                 break;
             case R.id.liver:
 
-                    patientRestrictions.put("Liver",checked);
+                patientRestrictions.put("Liver",checked);
 
                 break;
             case R.id.kidney:
 
-                    patientRestrictions.put("Kidney",checked);
+                patientRestrictions.put("Kidney",checked);
 
                 break;
             case R.id.knee:
 
-                    patientRestrictions.put("Knee_Problems",checked);
+                patientRestrictions.put("Knee_Problems",checked);
 
                 break;
             case R.id.spinal:
 
-                    patientRestrictions.put("Spinal_Problems",checked);
+                patientRestrictions.put("Spinal_Problems",checked);
 
                 break;
             case R.id.smoking:
 
-                    patientGeneral.put("Smoking",checked);
+                patientGeneral.put("Smoking",checked);
 
                 break;
             case R.id.alcohol:
 
-                    patientGeneral.put("Alcohol",checked);
+                patientGeneral.put("Alcohol",checked);
 
                 break;
         }
