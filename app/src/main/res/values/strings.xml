@@ -6,4 +6,9 @@
     <string name="prompt_password_again">Confirm Password</string>
     <string name="signup">Register</string>
     <string name="login">Login</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="more_details">More Details</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
 </resources>
