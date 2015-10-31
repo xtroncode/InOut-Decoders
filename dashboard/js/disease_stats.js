@@ -1,75 +1,37 @@
-    // <script type="text/javascript">
-    //
-    //   // Load the Visualization API and the piechart package.
-    //   google.load('visualization', '1.0', {'packages':['corechart']});
-    //
-    //   // Set a callback to run when the Google Visualization API is loaded.
-    //   google.setOnLoadCallback(drawChart);
-    //
-    //   // Callback that creates and populates a data table,
-    //   // instantiates the pie chart, passes in the data and
-    //   // draws it.
-    //   function drawChart() {
-    //
-    //     // Create the data table.
-    //     var data = new google.visualization.DataTable();
-    //     data.addColumn('string', 'Topping');
-    //     data.addColumn('number', 'Slices');
-    //     data.addRows([
-    //       ['Mushrooms', 3],
-    //       ['Onions', 1],
-    //       ['Olives', 1],
-    //       ['Zucchini', 1],
-    //       ['Pepperoni', 2]
-    //     ]);
-    //
-    //     // Set chart options
-    //     var options = {'title':'How Much Pizza I Ate Last Night',
-    //                    'width':400,
-    //                    'height':300};
-    //
-    //     // Instantiate and draw our chart, passing in some options.
-    //     var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-    //     chart.draw(data, options);
-    //   }
-    // </script>
 var React = require('react');
+var Chart = require('react-google-charts').Chart;
 
 var diseaseStat = React.createClass({
-  // google.load('visualization', '1.0', {'packages':['corechart']});
-  //
-  // // Set a callback to run when the Google Visualization API is loaded.
-  // google.setOnLoadCallback(drawChart);
+	getInitialState: function() {
+		return {
+			BarChart: {
+				data: [],
+				chartType: "",
+				options : {}
+			}
+		};
+	},
+	componentDidMount: function() {
+		var BarChart = {
+			data : this.props.data,
+			options: this.props.options,
+			chartType: "BarChart",
+			div_id: "BarChart"
+		};
 
-  // Callback that creates and populates a data table,
-  // instantiates the pie chart, passes in the data and
-  // draws it.
-  render() {
-    // function drawChart() {
-    //   // Create the data table.
-      // var data = new google.visualization.DataTable();
-      // data.addColumn('string', 'Topping');
-      // data.addColumn('number', 'Slices');
-      // data.addRows([
-      //   ['Mushrooms', 3],
-      //   ['Onions', 1],
-      //   ['Olives', 1],
-      //   ['Zucchini', 1],
-      //   ['Pepperoni', 2]
-      // ]);
-      //
-      // // Set chart options
-      // var options = {'title':'How Much Pizza I Ate Last Night',
-      //                'width':400,
-      //                'height':300};
-      //
-      // // Instantiate and draw our chart, passing in some options.
-      // var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-      // // chart.draw(data, options);
-    // }
+		this.setState({
+			'BarChart': BarChart
+		});
 
-    return (
-      chart.draw(data, options);
-    );
-  }
+	},
+
+	render: function() {
+
+		return (
+			<div className="Examples">
+				<h3> Bar Chart </h3>
+				<Chart chartType={this.state.BarChart.chartType} width={"500px"} height={"300px"} data={this.state.BarChart.data} options = {this.state.BarChart.options}/>
+			</div>
+		);
+	}
 });
