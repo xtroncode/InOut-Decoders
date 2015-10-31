@@ -27,7 +27,7 @@ var ParseReact = require('parse-react');
 var ParseComponent = ParseReact.Component(React);
 var Chart = require('react-google-charts').Chart;
 
-var diseaseStat = require('./disease_stats.js');
+// var diseaseStat = require('./disease_stats.js');
 
 // Top-Level component that binds to Parse using the ParseReact Mixin.
 // This should help demonstrate the "It's Just That Easy" potential here.
@@ -93,9 +93,15 @@ export default class DiseaseCharts extends ParseComponent {
     // },
 
     return (
-      <div className="BarChart">
-      	<h3> Bar Chart </h3>
-      	<Chart chartType='PieChart' data={data} options={options} graph_id="piechart_graph"/>
+      <div>
+        <div className="BarChart">
+          <h3> Bar Chart </h3>
+          <Chart chartType='BarChart' data={data} options={options} graph_id="barchart_graph"/>
+        </div>
+        <div className="YoloChart">
+          <h3> Yolo Chart </h3>
+          <Chart chartType='BarChart' data={data} options={options} graph_id="barchart_graph2"/>
+        </div>
       </div>
 
       // <li>

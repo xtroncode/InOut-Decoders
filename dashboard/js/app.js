@@ -27,8 +27,14 @@ var Parse = require('parse');
 Parse.initialize('3mpbjonGIhuMvrW4IfynrMEBgIqUKpAnXX51DhlV' , 'OOlglimYlusFCdDC4SknqRJSHiDYYJ5E0ws3zOJe');
 
 var DiseaseCharts = require('./disease_charts.js');
+// var MedicineCharts = require('./medicine_charts.js')
 
 React.render(
   <DiseaseCharts />,
   document.getElementById('app')
 );
+
+// React.render(
+//   <MedicineCharts />,
+//   document.getElementById('app2')
+// );
