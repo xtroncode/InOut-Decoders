@@ -21,10 +21,11 @@
  */
 
 var Parse = require('parse').Parse;
+var React = require('react');
 // ParseReact sits on top of your Parse singleton
 var ParseReact = require('parse-react');
-var React = require('react');
 var ParseComponent = ParseReact.Component(React);
+var Chart = require('react-google-charts').Chart;
 
 var diseaseStat = require('./disease_stats.js');
 
@@ -65,23 +66,41 @@ export default class DiseaseCharts extends ParseComponent {
     var centAir = numAir / items.length * 100;
 
     var data = [
-      ['Vector', 'Food', 'Water', 'Air'],
-      [centVector, centFood, centWater, centAir]
+      ['Disease', 'Percentage'],
+      // ['Vector', 'Food', 'Water', 'Air'],
+      ['Vector', centVector],
+      ['Food', centFood],
+      ['Water', centWater],
+      ['Air', centAir]
+      // [1, 2, 3, 4]
       ];
     var options = {'title':'Disease History',
                     'width':400,
                     'height':300};
+
+    // componentDidMount: function() {
+    //   var BarChart = {
+    //     data : {data},
+    //     options: {options},
+    //     chartType: "BarChart",
+    //     div_id: "BarChart"
+    //   };
+    //
+    //   this.setState({
+    //     'BarChart': BarChart
+    //   });
+    //
+    // },
+
     return (
+      <div className="BarChart">
+      	<h3> Bar Chart </h3>
+      	<Chart chartType='PieChart' data={data} options={options} graph_id="piechart_graph"/>
+      </div>
+
       // <li>
-      //   numVector: {centVector}
-      //   <br/>
-      //   numWater: {centWater}
-      //   <br/>
-      //   numAir: {centAir}
-      //   <br/>
-      //   numFood: {centFood}
+      //   {centVector}
       // </li>
-      <diseaseStat data={data} options={options}></diseaseStat>
     );
   }
 }
