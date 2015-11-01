@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        View MainView = getCurrentFocus();
+        View MainView =findViewById(R.id.main_content);
 
         if(result != null) {
             if(result.getContents() == null) {
