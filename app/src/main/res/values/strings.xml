@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InOut-Decoders</string>
+    <string name="app_name">MedConnect</string>
     <string name="action_settings">Settings</string>
     <string name="prompt_username">Practitioner Number</string>
     <string name="prompt_password">Password</string>
