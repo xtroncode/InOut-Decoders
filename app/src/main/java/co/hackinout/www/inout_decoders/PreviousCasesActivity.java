@@ -51,7 +51,7 @@ public class PreviousCasesActivity extends AppCompatActivity {
 
             mDataset = query2.find();
 
-            mAdapter = new MyAdapter(mDataset);
+            mAdapter = new MyAdapter(mDataset,getApplicationContext());
             mRecyclerView.setAdapter(mAdapter);
 
         }catch (ParseException e){

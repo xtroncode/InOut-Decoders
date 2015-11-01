@@ -1,7 +1,10 @@
 package co.hackinout.www.inout_decoders;
 
 import android.content.Intent;
+import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
@@ -10,15 +13,24 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by meet on 31/10/15.
@@ -51,14 +63,20 @@ public class NewPatientActivity extends AppCompatActivity {
                     Log.d("name", object.getString("Name"));
                     patientObject = object;
 
-                    patientHistory =  patientObject.getParseObject("History");
+                    patientHistory = patientObject.getParseObject("History");
                     patientRestrictions = patientObject.getParseObject("Restrictions");
-                    patientGeneral= patientObject.getParseObject("General");
+                    patientGeneral = patientObject.getParseObject("General");
 
                     setExistingValues();
                 } else {
                     Log.d("Error", "errrr");
                 }
+            }
+        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_pdf);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
             }
         });
 
@@ -71,10 +89,26 @@ public class NewPatientActivity extends AppCompatActivity {
                 patientObject.put("History",patientHistory);
                 patientObject.put("Restrictions",patientRestrictions);
                 patientObject.put("General",patientGeneral);
-                patientObject.saveInBackground();
+                patientObject.saveInBackground(new SaveCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            showDeatilsChangeStatus(true);
+                        } else {
+                            showDeatilsChangeStatus(false);
+                        }
+                    }
+                });
                             }
         });
 
+    }
+    private void showDeatilsChangeStatus(boolean success){
+        if(success){
+            Toast.makeText(this, "History change successfull", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this,"History change failed",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setExistingValues(){

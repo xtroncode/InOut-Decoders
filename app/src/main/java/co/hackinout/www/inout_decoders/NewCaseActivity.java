@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,12 +72,33 @@ public class NewCaseActivity extends AppCompatActivity {
                 newcase.put("PredictedDisease",predictedDisease.getText().toString());
                 newcase.put("Medicines",medicines.getText().toString());
                 newcase.put("Patient",patientObject);
-                newcase.saveInBackground();
+                newcase.saveInBackground(
+                        new SaveCallback() {
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    showDeatilsChangeStatus(true);
+                                } else {
+                                    showDeatilsChangeStatus(false);
+                                }
+                            }
+                        }
+                );
             }
         });
 
+
+
+
     }
 
+    private void showDeatilsChangeStatus(boolean success){
+        if(success){
+            Toast.makeText(this, "New Case Created.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this,"Case creation failed.",Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 

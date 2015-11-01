@@ -20,6 +20,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

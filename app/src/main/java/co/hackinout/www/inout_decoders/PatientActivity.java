@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.parse.FindCallback;
@@ -31,6 +32,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,7 +76,15 @@ public class PatientActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     patientObject.put("Weight", Integer.parseInt(weight.getText().toString()));
                     patientObject.put("Height", Integer.parseInt(height.getText().toString()));
-                    patientObject.saveInBackground();
+                    patientObject.saveInBackground(new SaveCallback() {
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                showDeatilsChangeStatus(true);
+                            } else {
+                                showDeatilsChangeStatus(false);
+                            }
+                        }
+                    });
                 }
             });
             mPatientHistory.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +121,14 @@ public class PatientActivity extends AppCompatActivity {
 
         }
 
+        private void showDeatilsChangeStatus(boolean success){
+            if(success){
+                Toast.makeText(this,"Detail change successfull",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this,"Detail change failed",Toast.LENGTH_SHORT).show();
+            }
+        }
         private void ProcessPatientData(String ScanData){
 
 

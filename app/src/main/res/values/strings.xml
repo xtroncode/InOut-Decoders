@@ -19,4 +19,7 @@
     <string name="gender">Gender: %1$s</string>
     <string name="yob">YOB: %1$s</string>
     <string name="pc">PinCode: %1$s</string>
+    <string name="card_symptoms">Symptoms: %1$s</string>
+    <string name="card_medicines">Medicines: %1$s</string>
+    <string name="card_disease">Predicted Disease: %1$s</string>
 </resources>

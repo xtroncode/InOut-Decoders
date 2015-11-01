@@ -1,5 +1,7 @@
 package co.hackinout.www.inout_decoders;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,9 +39,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     // Provide a suitable constructor (depends on the kind of dataset)
     List<ParseObject> cases;
-
-    MyAdapter(List<ParseObject> cases){
+    Context ctx;
+    MyAdapter(List<ParseObject> cases,Context ctx){
         this.cases = cases;
+        this.ctx = ctx;
     }
 
     // Create new views (invoked by the layout manager)
@@ -55,14 +58,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return vh;
     }
 
+
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.card_symptoms.setText(cases.get(position).getString("Symptoms"));
-        holder.card_predicted_disease.setText(cases.get(position).getString("PredictedDisease"));
-        holder.card_medicines.setText(cases.get(position).getString("Medicines"));
+        Resources res = ctx.getResources();
+        holder.card_symptoms.setText(res.getString(R.string.card_symptoms,cases.get(position).getString("Symptoms")));
+        holder.card_predicted_disease.setText(res.getString(R.string.card_symptoms,cases.get(position).getString("PredictedDisease")));
+        holder.card_medicines.setText(res.getString(R.string.card_symptoms,cases.get(position).getString("Medicines")));
 
     }
 
