@@ -122,11 +122,11 @@ export default class DiseaseCharts extends ParseComponent {
     return (
       <div>
         <div className="BarChart">
-          <h3> Bar Chart </h3>
+          // <h3> Bar Chart </h3>
           <Chart chartType='PieChart' data={disease_data} options={disease_options} graph_id="barchart_graph"/>
         </div>
         <div className="MedicineChart">
-          <h3> Medicine Chart </h3>
+          // <h3> Medicine Chart </h3>
           <Chart chartType='BarChart' data={med_data} options={med_options} graph_id="barchart_graph2"/>
         </div>
       </div>
