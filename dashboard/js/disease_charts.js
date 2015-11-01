@@ -34,38 +34,42 @@ var Chart = require('react-google-charts').Chart;
 export default class DiseaseCharts extends ParseComponent {
   observe(props, state) {
     return {
-      items: new Parse.Query('disease_base').ascending('updatedAt')
+      disease_class: new Parse.Query('disease_base').ascending('updatedAt'),
+      medicine_class: new Parse.Query('MedCase').ascending('Medicines')
     };
   }
 
   render() {
-    var items = this.data.items;
+    var disease_class = this.data.disease_class;
+    var medicine_class = this.data.medicine_class;
+
+    // Number crunching with Disease classification Data
     var numVector = 0;
     var numFood = 0;
     var numWater = 0;
     var numAir = 0;
     var i = 0;
-    for (i=0; i < items.length; i++) {
-      if(items[i].diseaseType == 'Food') {
+    for (i=0; i < disease_class.length; i++) {
+      if(disease_class[i].diseaseType == 'Food') {
         numFood++;
       }
-      else if(items[i].diseaseType == 'Air') {
+      else if(disease_class[i].diseaseType == 'Air') {
         numAir++;
       }
-      else if(items[i].diseaseType == 'Vector') {
+      else if(disease_class[i].diseaseType == 'Vector') {
         numVector++;
       }
-      else if(items[i].diseaseType == 'Water') {
+      else if(disease_class[i].diseaseType == 'Water') {
         numWater++;
       }
     }
 
-    var centVector = numVector / items.length * 100;
-    var centFood = numFood / items.length * 100;
-    var centWater = numWater / items.length * 100;
-    var centAir = numAir / items.length * 100;
+    var centVector = numVector / disease_class.length * 100;
+    var centFood = numFood / disease_class.length * 100;
+    var centWater = numWater / disease_class.length * 100;
+    var centAir = numAir / disease_class.length * 100;
 
-    var data = [
+    var disease_data = [
       ['Disease', 'Percentage'],
       // ['Vector', 'Food', 'Water', 'Air'],
       ['Vector', centVector],
@@ -74,36 +78,58 @@ export default class DiseaseCharts extends ParseComponent {
       ['Air', centAir]
       // [1, 2, 3, 4]
       ];
-    var options = {'title':'Disease History',
-                    'width':400,
-                    'height':300};
+    var disease_options = {'title':'Disease Statistics',
+                    'width':580,
+                    'height':360};
 
-    // componentDidMount: function() {
-    //   var BarChart = {
-    //     data : {data},
-    //     options: {options},
-    //     chartType: "BarChart",
-    //     div_id: "BarChart"
-    //   };
-    //
-    //   this.setState({
-    //     'BarChart': BarChart
-    //   });
-    //
-    // },
+    // Number crunching with Medicine classification code
+    // var med=['Crocin','Paracetamol','Crocin','DCold'];
+    var med = [];
+    for (i=0; i < medicine_class.length; i++) {
+      med[i] = medicine_class[i].Medicines;
+    }
+    // var med = medicine_class.Medicines;
 
+  	var med_maps={};
+  	for(i=0;i<med.length;i++) {
+  		med_maps[med[i]]=0;
+  	}
+
+  	for(i=0;i<med.length;i++){
+      med_maps[med[i]]++;
+    }
+
+    var med_data=[];
+    med_data[0] = ['Medicine', 'Dose Count'];
+    var med_keys=Object.keys(med);
+    var j=0;
+    for(i in med_maps)
+    {
+      med_data[++j]=[i,parseInt(med_maps[i])];
+      //alert(i+med_maps[i]);
+      // med_data[i]=['Vector',centVector];
+    }
+    // var med_data = [['Medicine', 'Count']];
+    // for (var i = 0; i < med_maps.length; i++) {
+    //   med_data[i] = [med_keys[i], med_maps[med[i]]];
+    // }
+
+    var med_options = {'title':'Medicine Statistics',
+                    'width':580,
+                    'height':360};
+
+    // Returning the graph objects for rendering
     return (
       <div>
         <div className="BarChart">
           <h3> Bar Chart </h3>
-          <Chart chartType='BarChart' data={data} options={options} graph_id="barchart_graph"/>
+          <Chart chartType='PieChart' data={disease_data} options={disease_options} graph_id="barchart_graph"/>
         </div>
-        <div className="YoloChart">
-          <h3> Yolo Chart </h3>
-          <Chart chartType='BarChart' data={data} options={options} graph_id="barchart_graph2"/>
+        <div className="MedicineChart">
+          <h3> Medicine Chart </h3>
+          <Chart chartType='BarChart' data={med_data} options={med_options} graph_id="barchart_graph2"/>
         </div>
       </div>
-
       // <li>
       //   {centVector}
       // </li>
