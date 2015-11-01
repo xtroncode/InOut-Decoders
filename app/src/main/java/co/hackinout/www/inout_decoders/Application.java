@@ -3,8 +3,10 @@ package co.hackinout.www.inout_decoders;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.crashlytics.android.Crashlytics;
 import com.parse.Parse;
 import com.parse.ParseObject;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by meet on 31/10/15.
@@ -28,7 +30,8 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate(){
         super.onCreate();
-        ParseObject.registerSubclass(CasePost.class);
+        Fabric.with(this, new Crashlytics());
+        //ParseObject.registerSubclass(CasePost.class);
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
 

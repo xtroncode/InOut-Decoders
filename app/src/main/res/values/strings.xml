@@ -11,4 +11,12 @@
     <string name="more_details">More Details</string>
     <string name="weight">Weight</string>
     <string name="height">Height</string>
+    <string name="symptoms">Symptoms</string>
+    <string name="predicted_disease">Predicted Disease</string>
+    <string name="medicines">Medicines</string>
+    <string name="follow_up">Follow Up</string>
+    <string name="name">Name: %1$s</string>
+    <string name="gender">Gender: %1$s</string>
+    <string name="yob">YOB: %1$s</string>
+    <string name="pc">PinCode: %1$s</string>
 </resources>

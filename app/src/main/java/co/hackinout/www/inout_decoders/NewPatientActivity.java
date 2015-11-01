@@ -42,7 +42,7 @@ public class NewPatientActivity extends AppCompatActivity {
         patientGeneral = new ParseObject("General");
         patientRestrictions = new ParseObject("Restrictions");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Patients");
-        query.fromLocalDatastore();
+        //query.fromLocalDatastore();
         query.whereEqualTo("UID", intent.getDataString());
 
         query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -86,7 +86,7 @@ public class NewPatientActivity extends AppCompatActivity {
             cardiac = (CheckBox) findViewById(R.id.cardiac);
             cardiac.setChecked(patientHistory.getBoolean("Cardiac"));
             lungDiseases = (CheckBox) findViewById(R.id.lung_disease);
-            lungDiseases.setChecked(patientHistory.getBoolean("Lung_Diseases"));
+            lungDiseases.setChecked(patientHistory.getBoolean("Lung_Disease"));
 
             diabetes = (CheckBox) findViewById(R.id.diabetes);
             diabetes.setChecked(patientRestrictions.getBoolean("Diabetes"));
@@ -97,7 +97,7 @@ public class NewPatientActivity extends AppCompatActivity {
             kneeProblem = (CheckBox) findViewById(R.id.knee);
             kneeProblem.setChecked(patientRestrictions.getBoolean("Knee_Problems"));
             spinalProblems = (CheckBox) findViewById(R.id.spinal);
-            diabetes.setChecked(patientRestrictions.getBoolean("Spinal_Problems"));
+            spinalProblems.setChecked(patientRestrictions.getBoolean("Spinal_Problems"));
 
             smoking = (CheckBox) findViewById(R.id.smoking);
             smoking.setChecked(patientGeneral.getBoolean("Smoking"));

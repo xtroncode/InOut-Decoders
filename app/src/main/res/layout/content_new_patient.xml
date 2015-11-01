@@ -100,4 +100,6 @@
         android:padding="12dp"
         android:text="Patient History"/>
 
+
+
 </LinearLayout>

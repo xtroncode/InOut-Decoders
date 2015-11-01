@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -50,8 +51,8 @@ public class PatientActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_patient);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.patient_toolbar);
-            setSupportActionBar(toolbar);
+           // Toolbar toolbar = (Toolbar) findViewById(R.id.patient_toolbar);
+            //setSupportActionBar(toolbar);
 
             name = (TextView) findViewById(R.id.name);
             gender = (TextView) findViewById(R.id.gender);
@@ -60,7 +61,9 @@ public class PatientActivity extends AppCompatActivity {
             weight = (EditText) findViewById(R.id.weight);
             height = (EditText) findViewById(R.id.height);
             AppCompatButton mChangeDetails = (AppCompatButton) findViewById(R.id.btn_change_details);
-            AppCompatButton mPatientHistroy = (AppCompatButton) findViewById(R.id.view_patient_history);
+            AppCompatButton mPatientHistory = (AppCompatButton) findViewById(R.id.view_patient_history);
+            AppCompatButton mPreviousCases = (AppCompatButton) findViewById(R.id.view_previous_cases);
+
             Intent intent = getIntent();
            // Log.d("Intent string",intent.getDataString());
 
@@ -74,7 +77,7 @@ public class PatientActivity extends AppCompatActivity {
                     patientObject.saveInBackground();
                 }
             });
-            mPatientHistroy.setOnClickListener(new View.OnClickListener() {
+            mPatientHistory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(PatientActivity.this,NewPatientActivity.class);
@@ -84,11 +87,24 @@ public class PatientActivity extends AppCompatActivity {
                 }
             });
 
+            mPreviousCases.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(PatientActivity.this,PreviousCasesActivity.class);
+                    intent.setData(Uri.parse(patientObject.getString("UID")));
+                    startActivity(intent);
+
+                }
+            });
+
+
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_case);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(PatientActivity.this,NewCaseActivity.class);
+                    intent.setData(Uri.parse(patientObject.getString("UID")));
+                    startActivity(intent);
 
                 }
             });
@@ -186,11 +202,12 @@ public class PatientActivity extends AppCompatActivity {
         }
 
     private void ShowScannedData(ParseObject object){
+        Resources res = getResources();
 
-            name.setText(patientObject.getString("Name"));
-            gender.setText(patientObject.getString("gender"));
-            yob.setText(patientObject.getString("yob"));
-            pc.setText(patientObject.getString("pc"));
+            name.setText( res.getString(R.string.name,patientObject.getString("Name")));
+            gender.setText( res.getString(R.string.gender,patientObject.getString("gender")));
+            yob.setText( res.getString(R.string.yob,patientObject.getString("yob")));
+            pc.setText( res.getString(R.string.pc,patientObject.getString("pc")));
 
     }
 
