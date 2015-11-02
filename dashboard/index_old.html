@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Decoding Rural Health</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+      google.setOnLoadCallback(drawTooltipCharts);
+
+      // Set up data for visible chart.
+      var primaryData = [
+        ['Cholera', 22.4],
+        ['Malaria', 111.3],
+        ['Tuberculosis', 19.2],
+        ['Dengue', 1.9],
+        ['Chikungunya', 6.4],
+        ['Diphteria', 2.4]
+      ];
+
+      // Set up data for your tooltips.
+      var tooltipData = [
+        ['Year', 'Cholera', 'Malaria', 'Tuberculosis',
+        'Dengue', 'Chikungunya',
+        'Diphteria'],
+        ['Oct', 12.5, 98.7, 25.3, 0.6, 3.3, 2.8],
+        ['Sep', 13.0, 90.7, 17.1, 0.8, 2.8, 3.4],
+        ['Aug', 9.3, 93.0, 15.8, 0.9, 1.8, 3.8],
+        ['Jul', 14.9, 97.5, 17.1, 1.3, 4.4, 5.1],
+        ['Jun', 14.3, 98.7, 13.6, 2.1, 4.9, 5.7],
+        ['May', 18.2, 106.5, 19.4, 2.2, 5.2, 2.3],
+        ['Apr', 17.4, 111.0, 14.3, 4.2, 4.6, 2.7],
+        ['Mar', 16.8, 111.3, 16.6, 2.0, 2.9, 3.9],
+        ['Feb', 16.6, 108.7, 12.7, 1.4, 5.8, 2.5],
+        ['Jan', 15.7, 111.3, 15.0, 1.9, 4.7, 2.4]
+      ];
+
+      var primaryOptions = {
+        title: 'Spread of Diseases',
+        legend: 'none',
+        tooltip: {isHtml: true} // This MUST be set to true for your chart to show.
+      };
+
+      var tooltipOptions = {
+        title: 'Spread of the Disease Over The Last 10 Months',
+        legend: 'none'
+      };
+
+      // Draws your charts to pull the PNGs for your tooltips.
+      function drawTooltipCharts() {
+
+        var data = new google.visualization.arrayToDataTable(tooltipData);
+        var view = new google.visualization.DataView(data);
+
+        // For each row of primary data, draw a chart of its tooltip data.
+        for (var i = 0; i < primaryData.length; i++) {
+
+          // Set the view for each event's data
+          view.setColumns([0, i + 1]);
+
+          var hiddenDiv = document.getElementById('hidden_div');
+          var tooltipChart = new google.visualization.LineChart(hiddenDiv);
+
+          google.visualization.events.addListener(tooltipChart, 'ready', function() {
+
+            // Get the PNG of the chart and set is as the src of an img tag.
+            var tooltipImg = '<img src="' + tooltipChart.getImageURI() + '">';
+
+            // Add the new tooltip image to your data rows.
+            primaryData[i][2] = tooltipImg;
+
+          });
+          tooltipChart.draw(view, tooltipOptions);
+        }
+        drawPrimaryChart();
+      }
+
+      function drawPrimaryChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Disease');
+        data.addColumn('number', 'Count');
+
+        // Add a new column for your tooltips.
+        data.addColumn({
+          type: 'string',
+          label: 'Tooltip Chart',
+          role: 'tooltip',
+          'p': {'html': true}
+        });
+
+        // Add your data (with the newly added tooltipImg).
+        data.addRows(primaryData);
+
+
+        var visibleDiv = document.getElementById('visible_div');
+        var primaryChart = new google.visualization.ColumnChart(visibleDiv);
+        primaryChart.draw(data, primaryOptions);
+
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- <div id="app"></div>
+    <script src="js/bundle.js"></script> -->
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+              </button> <a class="navbar-brand" href="#">MedConnect</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li>
+                  <a href="#">Home</a>
+                </li>
+              </ul>
+              <form class="navbar-form text-center" role="search">
+                <div class="form-group">
+                  <input class="form-control" type="text">
+                </div>
+                <button type="submit" class="btn btn-default">
+                  MedSearch
+                </button>
+              </form>
+              <ul class="nav navbar-nav navbar-right">
+                <!-- <li>
+                  <a href="#">Link</a>
+                </li> -->
+                <!-- <li class="dropdown">
+                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong class="caret"></strong></a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="#">Action</a>
+                    </li>
+                    <li>
+                      <a href="#">Another action</a>
+                    </li>
+                    <li>
+                      <a href="#">Something else here</a>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li>
+                      <a href="#">Separated link</a>
+                    </li>
+                  </ul> -->
+                </li>
+              </ul>
+            </div>
+
+          </nav>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="row">
+                <div class="col-md-12">
+                  <form class="form-horizontal" role="form">
+                    <div class="form-group">
+
+                      <label for="inputEmail3" class="col-sm-2 control-label">
+                        Region
+                      </label>
+                      <div class="col-sm-10">
+                        <input class="form-control" id="inputEmail3" type="email">
+                      </div>
+                    </div>
+                  </form>
+                  <div class="btn-group">
+
+                    <button class="btn btn-default">
+                      Action
+                    </button>
+                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="#">Action</a>
+                      </li>
+                      <li class="disabled">
+                        <a href="#">Another action</a>
+                      </li>
+                      <li class="divider">
+                      </li>
+                      <li>
+                        <a href="#">Something else here</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- Disease Chart goes in here! -->
+                  <div id="app"></div>
+                  <script src="js/bundle.js"></script>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- <div id="app2"></div> -->
+                    <div id="hidden_div" style="display:none"></div>
+                    <div id="visible_div" style="height:300px"></div>
+                </div>
+              </div>
+              <!-- Script to call the react code -->
+              <!--<script src="js/bundle.js"></script> -->
+            </div>
+            <div class="col-md-2">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <!-- <ol>
+                        <li>
+                        <p id="andarwala"> </p>
+                        </li>
+                      </ol> -->
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/scripts.js"></script>
+  </body>
+</html>
