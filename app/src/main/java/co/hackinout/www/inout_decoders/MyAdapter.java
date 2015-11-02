@@ -66,8 +66,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         Resources res = ctx.getResources();
         holder.card_symptoms.setText(res.getString(R.string.card_symptoms,cases.get(position).getString("Symptoms")));
-        holder.card_predicted_disease.setText(res.getString(R.string.card_symptoms,cases.get(position).getString("PredictedDisease")));
-        holder.card_medicines.setText(res.getString(R.string.card_symptoms,cases.get(position).getString("Medicines")));
+        holder.card_predicted_disease.setText(res.getString(R.string.card_disease,cases.get(position).getString("PredictedDisease")));
+        holder.card_medicines.setText(res.getString(R.string.card_medicines,cases.get(position).getString("Medicines")));
 
     }
 
